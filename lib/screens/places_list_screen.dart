@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_places_app/screens/place_detail_screen.dart';
-
 import 'package:provider/provider.dart';
 
-import 'package:my_places_app/providers/places.dart';
+import 'package:my_places_app/screens/place_detail_screen.dart';
 import 'package:my_places_app/screens/add_place_screen.dart';
+import 'package:my_places_app/providers/places.dart';
 
 class PlacesListScreen extends StatelessWidget {
   const PlacesListScreen({Key key}) : super(key: key);
@@ -29,7 +28,10 @@ class PlacesListScreen extends StatelessWidget {
             ? Center(child: CircularProgressIndicator())
             : Consumer<Places>(
                 child: Center(
-                  child: const Text('No Places Added Yet!'),
+                  child: const Text(
+                    'No Places Added Yet!',
+                    style: TextStyle(fontSize: 30),
+                  ),
                 ),
                 builder: (context, places, chd) => places.items.isEmpty
                     ? chd
