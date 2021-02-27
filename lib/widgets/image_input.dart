@@ -59,10 +59,14 @@ class _ImageInputState extends State<ImageInput> {
       source: ImageSource.camera,
       maxWidth: 600,
     );
+    if (imageFile == null) {
+      return;
+    }
     setState(() {
       _storedImage = File(imageFile.path);
     });
     final appDir = await syspaths.getApplicationDocumentsDirectory();
+    print('This is the path you are looking for: ${appDir.path}');
     final fileName = path.basename(imageFile.path);
     final savedImage = await _storedImage.copy('${appDir.path}/$fileName');
     widget.onSelectImage(savedImage);
