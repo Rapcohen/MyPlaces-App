@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_places_app/screens/place_detail_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -23,29 +24,32 @@ class PlacesListScreen extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: Provider.of<Places>(context, listen: false).fetchAndSetPlaces(),
-        builder: (context, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-                ? Center(child: CircularProgressIndicator())
-                : Consumer<Places>(
-                    child: Center(
-                      child: const Text('No Places Added Yet!'),
-                    ),
-                    builder: (context, places, chd) => places.items.isEmpty
-                        ? chd
-                        : ListView.builder(
-                            itemCount: places.items.length,
-                            itemBuilder: (context, index) => ListTile(
-                              leading: CircleAvatar(
-                                backgroundImage:
-                                    FileImage(places.items[index].image),
-                              ),
-                              title: Text(places.items[index].title),
-                              onTap: () {
-                                //Go to detail page
-                              },
-                            ),
+        builder: (context, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? Center(child: CircularProgressIndicator())
+            : Consumer<Places>(
+                child: Center(
+                  child: const Text('No Places Added Yet!'),
+                ),
+                builder: (context, places, chd) => places.items.isEmpty
+                    ? chd
+                    : ListView.builder(
+                        itemCount: places.items.length,
+                        itemBuilder: (context, index) => ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                FileImage(places.items[index].image),
                           ),
-                  ),
+                          title: Text(places.items[index].title),
+                          subtitle: Text(places.items[index].location.address),
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                                PlaceDetailScreen.routeName,
+                                arguments: places.items[index].id);
+                          },
+                        ),
+                      ),
+              ),
       ),
     );
   }

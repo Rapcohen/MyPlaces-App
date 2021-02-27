@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'package:my_places_app/helpers/location_helper.dart';
+import 'package:my_places_app/screens/map_screen.dart';
 
 class LocationInput extends StatefulWidget {
-  LocationInput({Key key}) : super(key: key);
+  final Function onSelectPlace;
+
+  LocationInput({Key key, this.onSelectPlace}) : super(key: key);
 
   @override
   _LocationInputState createState() => _LocationInputState();
@@ -45,9 +51,7 @@ class _LocationInputState extends State<LocationInput> {
               icon: Icon(Icons.map),
               label: const Text('Select on Map'),
               textColor: Theme.of(context).primaryColor,
-              onPressed: () {
-                //..
-              },
+              onPressed: _selectOnMap,
             ),
           ],
         )
@@ -56,6 +60,40 @@ class _LocationInputState extends State<LocationInput> {
   }
 
   Future<void> _getUserLocation() async {
-    final locData = await Location().getLocation();
+    try {
+      final locData = await Location().getLocation();
+      _showPreview(locData.latitude, locData.longitude);
+      widget.onSelectPlace(locData.latitude, locData.longitude);
+    } catch (e) {
+      return;
+    }
+  }
+
+  Future<void> _selectOnMap() async {
+    final LatLng selectedLocation = await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => MapScreen(isSelecting: true),
+      ),
+    );
+    if (selectedLocation == null) {
+      return;
+    } else {
+      _showPreview(selectedLocation.latitude, selectedLocation.longitude);
+      widget.onSelectPlace(
+        selectedLocation.latitude,
+        selectedLocation.longitude,
+      );
+    }
+  }
+
+  void _showPreview(double lat, double lng) {
+    final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
+      latitude: lat,
+      longitude: lng,
+    );
+    setState(() {
+      _previewImageUrl = staticMapImageUrl;
+    });
   }
 }
