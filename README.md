@@ -2,9 +2,8 @@
 
 _A Demo Flutter Project._
 
-MyPlaces app allows users to save their favorite places.
-
-This app uses **native device features** such as device camera & location, and several **Google-apis** for showing maps & getting user location.
+MyPlaces app allows users to save their favorite places.  
+This app uses **native device features** such as device camera & location, and several **Google-apis** for showing maps & getting user location and address.
 
 **Screenshots:**
 
