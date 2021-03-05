@@ -7,7 +7,7 @@ import 'package:my_places_app/API.dart';
 class LocationHelper {
   static String generateLocationPreviewImage(
       {double latitude, double longitude}) {
-    return 'https://maps.googleapis.com/maps/api/staticmap?center=$latitude,$longitude&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7Alabel:C%7C$latitude,$longitude&key=${API.GOOGLE_API_KEY}';
+    return 'https://maps.googleapis.com/maps/api/staticmap?center=$latitude,$longitude&zoom=12&size=600x300&maptype=roadmap&markers=color:red%7Alabel:C%7C$latitude,$longitude&key=${API.GOOGLE_API_KEY}';
   }
 
   static Future<String> getPlaceAddress(double lat, double lng) async {

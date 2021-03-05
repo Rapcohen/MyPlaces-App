@@ -16,10 +16,11 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => Places(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'My Places',
         theme: ThemeData(
           primarySwatch: Colors.indigo,
-          accentColor: Colors.amber,
+          accentColor: Colors.indigoAccent,
         ),
         home: PlacesListScreen(),
         routes: {

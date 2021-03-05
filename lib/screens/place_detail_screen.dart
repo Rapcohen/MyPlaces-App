@@ -24,10 +24,13 @@ class PlaceDetailScreen extends StatelessWidget {
           Container(
             height: 250,
             width: double.infinity,
-            child: Image.file(
-              selectedPlace.image,
-              fit: BoxFit.cover,
-              width: double.infinity,
+            child: Hero(
+              tag: selectedPlace.id,
+              child: Image.file(
+                selectedPlace.image,
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
             ),
           ),
           SizedBox(
